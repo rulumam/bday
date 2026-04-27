@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HBD For You! ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -19,18 +19,27 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-dark);
-            overflow: hidden;
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto; /* Memungkinkan scroll di HP */
+        }
+
+        .wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .container {
             text-align: center;
-            padding: 20px;
-            max-width: 600px;
-            display: none; /* Sembunyi dulu sampai kado dibuka */
+            max-width: 500px;
+            width: 100%;
+            display: none; 
+            padding-bottom: 50px;
         }
 
         #overlay {
@@ -41,51 +50,62 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
+            touch-action: manipulation;
         }
 
         .gift-box {
-            font-size: 100px;
+            font-size: 80px;
             cursor: pointer;
             filter: drop-shadow(0 0 10px var(--accent-color));
             animation: bounce 2s infinite;
             background: #f3e8ff; 
-            padding: 20px;
-            border-radius: 30px;
+            padding: 30px;
+            border-radius: 40px;
             line-height: 1;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-top: 0;
         }
 
         .message {
-            font-size: 1.1rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
             color: #4b5563;
+            word-wrap: break-word;
+            text-align: center;
         }
 
         .btn-misteri {
             background: var(--primary-color);
             border: none;
             color: white;
-            padding: 14px 35px;
+            padding: 15px 30px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            margin-top: 30px;
-            display: none; /* Muncul setelah teks selesai */
+            margin-top: 25px;
+            display: none;
+            width: 100%;
+            max-width: 250px;
             box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
         }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-20px);}
-            60% {transform: translateY(-10px);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+
+        @media (max-height: 500px) {
+            .gift-box { font-size: 50px; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -96,14 +116,17 @@
         <p style="margin-top: 20px; color: var(--primary-color); font-weight: 600;">KETUK KADONYA</p>
     </div>
 
-    <div class="container" id="mainContent">
-        <h1 id="title">Happy Birthday!</h1>
-        <div class="message" id="typewriter"></div>
-        <button class="btn-misteri" id="secretBtn" onclick="extraSurprise()">Buka Hadiah Terakhir ✨</button>
+    <div class="wrapper">
+        <div class="container" id="mainContent">
+            <h1 id="title">Happy Birthday!</h1>
+            <div class="message" id="typewriter"></div>
+            <center><button class="btn-misteri" id="secretBtn" onclick="extraSurprise()">Buka Hadiah Terakhir ✨</button></center>
+        </div>
     </div>
 
     <script>
-        const messageText = "Selamat ulang tahun buat Ayanggg! 😘 Semoga Ayaangg selalu di berikan kemudahan dan juga kebahagiaan, semoga di umur ayangg yang sekarang ini, ayaang bisa menjadi pribadi yang lebih baik lagi yahh cantikknyaa akuu. Semangat teruss yaahh cantikknya akuu, akuu selaluu sayaang camaa ayangg, akuu mauu ayaangg selaluu menjadii ayaangg, yang selaluu manjaa ke akuu, dan selaluu buatt akuu happy dan selaluu buat akuuu gregett, tapii itu yang membuat aku semakinn sayang sama ayaangg, akuu mauu samaa ayaang teruss, dan aku mauu mewujudkan semua wishlist ayaang, semogaa ayaangg selaluu dalam lindungan Allah yaah cantikknyaa akuu, akuu mauu ayaangnyaaa jangan tinggalin sholat yahh cantiknyaa akuu, dan jangan tingalin akuu jugaa hehe, ocee cantikknyaa akuu, love you moreee moreeee moreeee moreee moree cantikknyaa cintaaaanyaaa isrtiiiinyaa lucuuunyaaa ayaangnyaaa imuttnyaa akuuuuu !";
+        // Pesan khusus untuk Ayang
+        const messageText = "Selamat ulang tahun buat Ayanggg! 😘 Semoga Ayaangg selalu di berikan kemudahan dan juga kebahagiaan, semoga di umur ayangg yang sekarang ini, ayaang bisa menjadi pribadi yang lebih baik lagi yahh cantikknyaa akuu. Semangat teruss yaahh cantikknya akuu, akuu selaluu sayaang camaa ayangg, akuu selaluu mauu ayaangg menjadii ayaangg, yang selaluu manjaa ke akuu, dan selaluu buatt akuu happy dan selaluu buat akuuu gregett, tapii itu yang membuat aku semakinn sayang sama ayaangg, akuu mauu samaa ayaang teruss, dan aku mauu mewujudkan semua wishlist ayaang, semogaa ayaangg selaluu dalam lindungan Allah yaah cantikknyaa akuu, akuu mauu ayaangnyaaa jangan tinggalin sholat yahh cantiknyaa akuu, dan jangan tingalin akuu jugaa hehe, ocee cantikknyaa akuu, love you moreee moreeee moreeee moreee moree cantikknyaa cintaaaanyaaa isrtiiiinyaa lucuuunyaaa ayaangnyaaa imuttnyaa akuuuuu !";
         let index = 0;
 
         function fireFireworks() {
@@ -114,24 +137,24 @@
                 if (timeLeft <= 0) return clearInterval(interval);
                 
                 confetti({
-                    particleCount: 40,
+                    particleCount: 30,
                     startVelocity: 30,
                     spread: 360,
                     origin: { x: Math.random(), y: Math.random() - 0.2 },
                     colors: ['#A78BFA', '#E6E6FA', '#9333ea']
                 });
-            }, 250);
+            }, 300);
         }
 
         function openGift() {
-            // 1. Efek ledakan saat klik
+            // Ledakan awal
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
-            // 2. Hilangkan overlay & munculkan konten
+            // Transisi tampilan
             document.getElementById('overlay').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
 
-            // 3. Jalankan kembang api & teks
+            // Jalankan efek kembang api & pengetikan teks
             fireFireworks();
             typeWriter();
         }
@@ -142,7 +165,7 @@
                 index++;
                 setTimeout(typeWriter, 50);
             } else {
-                document.getElementById('secretBtn').style.display = 'inline-block';
+                document.getElementById('secretBtn').style.display = 'block';
             }
         }
 
